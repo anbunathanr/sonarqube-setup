@@ -5,6 +5,13 @@ const express = require('express'),
 
 let username = "admin";
 let sqlQuery = `SELECT * FROM users WHERE username = '${username}'`;
+const connection = mysql.createConnection({ host: 'localhost', user: 'root', password: 'password', database: 'test_db' });
+connection.query(sqlQuery, (err, results) => {
+  if (err) { res.status(500).json({ error: 'Database query failed' }); }
+  else {
+    res.json(results); // Send the results as a JSON response
+  }
+});
 
 const apiRoute = require('./controllers/api'),
   middlewares = require('./middleware/common-middleware');
